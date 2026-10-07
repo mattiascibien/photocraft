@@ -76,6 +76,7 @@ pub mod menu_nav;
 pub mod menus;
 pub mod move_mods;
 pub mod move_ui;
+pub mod native_menu;
 pub mod new_doc_ui;
 pub mod notices;
 mod opacity_keys;
@@ -888,6 +889,8 @@ impl eframe::App for PhotocraftApp {
         }
         // Finder double-click / Open With / Dock drops (macOS open-documents events).
         self.drain_os_events(ctx);
+        // Native menu bar clicks and state sync (macOS; no-op elsewhere).
+        crate::native_menu::tick(self, ctx);
         // Files dropped onto the window open as documents (with their path, like File › Open).
         self.open_dropped(ctx.input(|i| i.raw.dropped_files.clone()));
         // The control transport wakes the UI on arrival (ctx.request_repaint); only poll while a

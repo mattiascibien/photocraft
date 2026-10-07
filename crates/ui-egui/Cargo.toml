@@ -33,6 +33,11 @@ base64 = "0.22"
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 rayon = { workspace = true }
 
+[target.'cfg(target_os = "macos")'.dependencies]
+# Native menu bar (NSMenu) on macOS: the in-window egui menu bar is hidden there
+# (see `native_menu`). macOS-only, so wasm and other platforms are unaffected.
+muda = { version = "0.17" }
+
 [dev-dependencies]
 egui_kittest = { workspace = true, features = ["wgpu", "snapshot", "eframe"] }
 # Only for examples/snapshot.rs (offscreen UI renders of real files).
